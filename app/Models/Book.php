@@ -18,4 +18,10 @@ class Book extends Model
         'tahun_terbit',
         'stok',
     ];
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class);
+    }
 }
+

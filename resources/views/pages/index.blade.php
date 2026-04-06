@@ -25,10 +25,10 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             @foreach ($books as $book)
-                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden">
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition overflow-hidden group">
 
                     {{-- Cover --}}
-                    <img src="{{ asset('storage/' . $book->cover) }}" class="w-full h-48 object-cover">
+                    <img src="{{ asset('storage/' . $book->cover) }}" class="w-full h-48 object-cover group-hover:scale-105 transition">
 
                     <div class="p-4">
                         {{-- Judul --}}
