@@ -10,22 +10,19 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('no_tlp')->nullable();
-        $table->string('kelas')->nullable();
-        $table->string('jurusan')->nullable();
-        $table->enum('role', ['admin', 'user'])->default('user');
-    });
-}
+    {
+        Schema::table('peminjaman', function (Blueprint $table) {
+            $table->string('jurusan')->after('kelas');
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('peminjaman', function (Blueprint $table) {
+            $table->dropColumn('jurusan');
         });
     }
 };

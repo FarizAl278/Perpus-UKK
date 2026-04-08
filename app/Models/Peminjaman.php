@@ -9,14 +9,22 @@ class Peminjaman extends Model
     protected $table = 'peminjaman';
 
     protected $fillable = [
+        'user_id',
         'book_id',
-        'nama_peminjam',
+        'kelas',
+        'jurusan',
         'tanggal_peminjaman',
         'tanggal_kembali',
+        'status',
     ];
 
     public function book()
     {
         return $this->belongsTo(Book::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

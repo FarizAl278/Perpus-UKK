@@ -26,10 +26,79 @@
 </body>
 
 <script>
+    // AUTO HIDE TOAST
     setTimeout(() => {
         document.getElementById('toast-success')?.remove();
         document.getElementById('toast-error')?.remove();
     }, 3000);
+
+
+    // OPEN MODAL (FIX DINAMIS 🔥)
+    function openModal(id, judul, penulis, kategori, cover) {
+        const modal = document.getElementById('modal');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        // SET DATA BUKU
+        document.getElementById('modal_judul').innerText = judul;
+        document.getElementById('modal_penulis').innerText = penulis;
+        document.getElementById('modal_kategori').innerText = kategori;
+        document.getElementById('modal_cover').src = cover;
+
+        // SET FORM ACTION
+        document.getElementById('modal_form').action = '/pinjam/' + id;
+
+        updateTanggal();
+    }
+
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+
+    function updateTanggal() {
+        const lama = parseInt(document.getElementById('lama_hari').value);
+        const sekarang = new Date();
+        sekarang.setDate(sekarang.getDate() + lama);
+
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+
+        document.getElementById('tanggal_kembali').textContent =
+            sekarang.toLocaleDateString('id-ID', options);
+    }
+
+
+    // CLOSE MODAL KLIK LUAR
+    document.getElementById('modal')?.addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+
+    // DROPDOWN
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    window.addEventListener('click', function(e) {
+        const dropdownButton = document.getElementById('dropdown-button');
+        const dropdownMenu = document.getElementById('dropdown');
+
+        if (dropdownButton && dropdownMenu) {
+            if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        }
+    });
 </script>
 
 </html>

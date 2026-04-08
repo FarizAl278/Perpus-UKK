@@ -55,26 +55,90 @@
                     {{-- Button --}}
                     <div class="mt-6 flex gap-3">
 
-                        <form action="/pinjam/{{ $book->id }}" method="POST">
-                            @csrf
+                        @auth
                             @if ($book->stok > 0)
                                 <button onclick="openModal()"
-                                    class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg text-sm">
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg">
                                     Pinjam Buku
                                 </button>
                             @else
-                                <button disabled
-                                    class="bg-gray-300 cursor-not-allowed text-gray-500 px-5 py-2 rounded-lg text-sm">
+                                <button disabled class="bg-gray-300 text-white px-5 py-2 rounded-lg">
                                     Stok Habis
                                 </button>
                             @endif
-                        </form>
+                        @else
+                            <a href="/admin/login" class="bg-yellow-500 text-white px-5 py-2 rounded-lg">
+                                Login dulu
+                            </a>
+                        @endauth
 
                         <a href="/"
                             class="border border-gray-300 hover:bg-gray-100 px-5 py-2 rounded-lg text-sm transition">
                             Kembali
                         </a>
                     </div>
+                </div>
+            </div>
+
+            <div id="modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+
+                <div class="bg-white w-full max-w-md rounded-2xl p-6">
+
+                    <h2 class="text-lg font-bold mb-4">Pinjam Buku</h2>
+
+                    {{-- 🔥 PREVIEW BUKU --}}
+                    <div class="flex gap-4 mb-4">
+                        <img src="{{ asset('storage/' . $book->cover) }}" class="w-16 h-24 object-cover rounded">
+
+                        <div>
+                            <h3 class="font-semibold text-sm">{{ $book->judul }}</h3>
+                            <p class="text-xs text-gray-500">{{ $book->penulis }}</p>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
+                                {{ $book->kategori }}
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- 🔥 PREVIEW USER --}}
+                    @auth
+                        <div class="bg-gray-100 p-3 rounded mb-4 text-sm">
+                            <p><strong>Nama:</strong> {{ auth()->user()->name }}</p>
+                            <p><strong>Kelas:</strong> {{ auth()->user()->kelas }}</p>
+                            <p><strong>Jurusan:</strong> {{ auth()->user()->jurusan }}</p>
+                        </div>
+                    @endauth
+
+                    <form action="/pinjam/{{ $book->id }}" method="POST">
+                        @csrf
+
+                        {{-- Lama pinjam --}}
+                        <label class="text-sm">Lama Pinjam</label>
+                        <select name="lama_hari" id="lama_hari" class="w-full border p-2 rounded mb-3"
+                            onchange="updateTanggal()">
+
+                            @for ($i = 1; $i <= 7; $i++)
+                                <option value="{{ $i }}">{{ $i }} Hari</option>
+                            @endfor
+
+                        </select>
+
+                        {{-- Tanggal kembali --}}
+                        <p class="text-sm text-gray-600 mb-4">
+                            Tanggal kembali:
+                            <span id="tanggal_kembali" class="font-medium"></span>
+                        </p>
+
+                        <div class="flex justify-end gap-2">
+                            <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded">
+                                Batal
+                            </button>
+
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                                Pinjam
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
             </div>
 

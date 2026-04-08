@@ -49,4 +49,9 @@ class BookResource extends Resource
             'edit' => EditBook::route('/{record}/edit'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        return parent::canViewAny();
+    }
 }
