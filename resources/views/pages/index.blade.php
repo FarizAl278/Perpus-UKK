@@ -1,4 +1,23 @@
 <x-app>
+
+@if (session('success'))
+            <div id="toast-success"
+                class="fixed top-5 right-5 z-50 bg-green-500 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-slide-in">
+
+                <span><i class="bi bi-check-square-fill"></i></span>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div id="toast-error"
+                class="fixed top-5 right-5 z-50 bg-red-500 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-2 animate-slide-in">
+
+                <span><i class="bi bi-x-square-fill"></i></span>
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
+
     <div class="max-w-6xl mx-auto p-6">
 
         <h1 class="text-3xl font-bold mb-6">Daftar Buku</h1>
@@ -149,34 +168,5 @@
         </div>
 
     </div>
-
-    {{-- SCRIPT --}}
-    <script>
-        function openModal(id, judul, penulis, kategori, cover) {
-            document.getElementById('modal').classList.remove('hidden');
-
-            document.getElementById('modal_judul').innerText = judul;
-            document.getElementById('modal_penulis').innerText = penulis;
-            document.getElementById('modal_kategori').innerText = kategori;
-            document.getElementById('modal_cover').src = cover;
-
-            document.getElementById('modal_form').action = '/pinjam/' + id;
-
-            updateTanggal();
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-
-        function updateTanggal() {
-            let hari = document.getElementById('lama_hari').value;
-            let today = new Date();
-            today.setDate(today.getDate() + parseInt(hari));
-
-            document.getElementById('tanggal_kembali').innerText =
-                today.toLocaleDateString('id-ID');
-        }
-    </script>
 
 </x-app>

@@ -168,7 +168,7 @@
                                 <p class="text-xs text-gray-500 mt-1">
                                     {{ $item->penulis }}
                                 </p>
-                            </div>
+      `                      </div>
                         </a>
                     @endforeach
 

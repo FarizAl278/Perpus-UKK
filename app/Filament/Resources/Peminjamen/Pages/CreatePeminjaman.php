@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\Peminjaman\Pages;
+namespace App\Filament\Resources\Peminjamen\Pages;
 
-use App\Filament\Resources\Peminjaman\PeminjamanResource;
+use App\Filament\Resources\Peminjamen\PeminjamanResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreatePeminjaman extends CreateRecord

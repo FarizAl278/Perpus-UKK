@@ -3,13 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -57,11 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(Peminjaman::class);
     }
 
-    public function canAccessPanel(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
         // Cek apakah user sudah login dan apakah role-nya string 'admin'
         // Karena tipe kolom kamu ENUM, Laravel akan membacanya sebagai string
-        return $this->role === 'siswa';
+        return $this->role === 'admin';
     }
 
 }
