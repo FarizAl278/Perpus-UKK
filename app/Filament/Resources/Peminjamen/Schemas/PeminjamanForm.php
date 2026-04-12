@@ -13,8 +13,11 @@ class PeminjamanForm
     {
         return $schema
             ->components([
-                TextInput::make('user.name')
-                    ->required(),
+                Select::make('user_id')
+                    ->label('Nama Siswa')
+                    ->relationship('user', 'name')
+                    ->disabled()
+                    ->dehydrated(false),
                 TextInput::make('kelas')
                     ->required(),
                 TextInput::make('jurusan')
@@ -23,8 +26,8 @@ class PeminjamanForm
                     ->required(),
                 DatePicker::make('tanggal_kembali'),
                 Select::make('status')
-                    ->options(['dipinjam' => 'Dipinjam', 'kembali' => 'Kembali'])
-                    ->default('dipinjam')
+                    ->options(['dipinjam' => 'Dipinjam', 'kembali' => 'Kembali', 'pengambilan' => 'Pengambilan', 'terlambat' => 'Terlambat'])
+                    ->default('kembali')
                     ->required(),
             ]);
     }

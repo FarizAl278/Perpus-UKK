@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Peminjaman extends Model
@@ -16,7 +17,22 @@ class Peminjaman extends Model
         'tanggal_peminjaman',
         'tanggal_kembali',
         'status',
+        'expired_at',
+        'diambil_at',
     ];
+
+    protected $casts = [
+        'tanggal_peminjaman' => 'datetime',
+        'tanggal_kembali' => 'datetime',
+        'expired_at' => 'datetime',
+        'diambil_at' => 'datetime',
+    ];
+
+    public function isLate()
+    {
+        return $this->status === 'dipinjam' &&
+            Carbon::parse($this->tanggal_kembali)->isPast();
+    }
 
     public function book()
     {

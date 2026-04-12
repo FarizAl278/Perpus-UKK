@@ -3,12 +3,19 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\SiswaAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/loginuser', [SiswaAuthController::class, 'index'])->name('siswa.login');
+Route::post('/logout-siswa', [SiswaAuthController::class, 'logout'])->name('siswa.logout');
+Route::post('/loginuser', [SiswaAuthController::class, 'login'])
+    ->name('siswa.login.store')
+    ->middleware('throttle:5,1'); // Max 5 percobaan per menit
 
 Route::get('/', [BookController::class, 'index']);
 Route::get('/books/{slug}', [BookController::class, 'show']);

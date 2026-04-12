@@ -17,13 +17,27 @@ class PeminjamanController extends Controller
             return back()->with('error', 'Stok habis!');
         }
 
-        // Cek apakah user masih meminjam buku yang sama
-        $sudahPinjam = Peminjaman::where('user_id', Auth::id())
+        // 🔶 CEK: masih nunggu pengambilan
+        $menunggu = Peminjaman::where('user_id', Auth::id())
+            ->where('book_id', $book->id)
+            ->where('status', 'pengambilan')
+            ->where(function ($q) {
+                $q->whereNull('expired_at')
+                    ->orWhere('expired_at', '>', now());
+            })
+            ->exists();
+
+        if ($menunggu) {
+            return back()->with('error', 'Kamu sudah memesan buku ini, silakan ambil dalam 12 jam!');
+        }
+
+        // 🔷 CEK: masih dipinjam
+        $dipinjam = Peminjaman::where('user_id', Auth::id())
             ->where('book_id', $book->id)
             ->where('status', 'dipinjam')
             ->exists();
 
-        if ($sudahPinjam) {
+        if ($dipinjam) {
             return back()->with('error', 'Kamu masih meminjam buku ini!');
         }
 
@@ -38,12 +52,14 @@ class PeminjamanController extends Controller
             'jurusan' => Auth::user()->jurusan,
             'tanggal_peminjaman' => now(),
             'tanggal_kembali' => now()->addDays((int) $request->lama_hari),
-            'status' => 'dipinjam',
+            'status' => 'pengambilan',
+
+            'expired_at' => now()->addMinute(),
         ]);
 
         $book->decrement('stok');
 
-        return back()->with('success', 'Buku berhasil dipinjam!');
+        return back()->with('success', 'Buku berhasil dipinjam, silakan ambil di perpustakaan dalam 12 jam!');
     }
 
     public function riwayat()

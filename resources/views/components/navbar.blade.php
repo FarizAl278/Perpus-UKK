@@ -1,69 +1,101 @@
-<nav class="bg-white shadow">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+<style>
+    .font-serif-display {
+        font-family: 'DM Serif Display', serif;
+    }
 
-        {{-- Logo --}}
-        <h1 class="font-bold text-xl text-blue-600">
-            Perpus<span class="text-gray-800">Ku</span>
-        </h1>
+    nav,
+    nav * {
+        font-family: 'Sora', sans-serif;
+    }
+</style>
 
-        {{-- Search --}}
-        <form action="/" method="GET" class="flex-1 max-w-md">
-            <input type="text" name="search" placeholder="Cari buku..."
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-        </form>
+<nav class="fixed top-0 inset-x-0 z-40 px-4 pt-4">
+    <div class="max-w-6xl mx-auto">
 
-        {{-- Menu --}}
-        <div class="flex items-center gap-4 relative">
+        <div
+            class="bg-white/70 backdrop-blur-md border border-sky-100/80 rounded-2xl px-5 py-3 flex items-center justify-between gap-6 shadow-[0_4px_24px_rgba(14,165,233,0.08)]">
 
-            <a href="/" class="text-gray-600 hover:text-blue-500 transition">
-                Home
-            </a>
+            {{-- LOGO --}}
+            <div class="flex items-center gap-2.5">
+                <img src="{{ asset('logo-naked-libris.png') }}" class="w-8 h-8">
+                <a href="/" class="font-serif-display text-xl text-slate-900">
+                    Libr<span class="text-sky-500 italic">is</span>
+                </a>
+            </div>
 
-            {{-- AUTH --}}
-            @auth
-                <div class="relative">
-                    {{-- Tambahkan id "dropdown-button" untuk mempermudah deteksi klik --}}
-                    <button id="dropdown-button" onclick="toggleDropdown()"
-                        class="flex items-center gap-2 text-gray-700 hover:text-blue-500 focus:outline-none">
+            {{-- DESKTOP MENU --}}
+            <div class="hidden md:flex items-center gap-1 text-sm">
+                <a href="/"
+                    class="px-3.5 py-2 rounded-xl font-medium
+                   {{ request()->is('/') ? 'bg-sky-50 text-sky-600' : 'text-slate-500 hover:bg-slate-50' }}">
+                    Home
+                </a>
+                <a href="/riwayat"
+                    class="px-3.5 py-2 rounded-xl font-medium
+                   {{ request()->is('riwayat') ? 'bg-sky-50 text-sky-600' : 'text-slate-500 hover:bg-slate-50' }}">
+                    Riwayat
+                </a>
+            </div>
 
-                        <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm">
+            {{-- AUTH DESKTOP --}}
+            <div class="hidden md:flex items-center gap-3">
+                @auth
+                    <a href="/profile" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl hover:bg-sky-50">
+                        <div class="w-7 h-7 bg-sky-500 text-white rounded-full flex items-center justify-center text-xs">
                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </div>
-
-                        <span class="text-sm">
+                        <span class="text-sm text-slate-700 hidden sm:block">
                             {{ auth()->user()->name }}
                         </span>
-                    </button>
+                    </a>
 
-                    {{-- Dropdown --}}
-                    <div id="dropdown" class="hidden absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50">
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button class="px-3 py-1.5 text-sm text-slate-400 hover:text-rose-500">
+                            Logout
+                        </button>
+                    </form>
+                @else
+                    <a href="loginuser" class="px-4 py-2 bg-sky-500 text-white text-sm rounded-full">
+                        Login
+                    </a>
+                @endauth
+            </div>
 
-                        <a href="/profile" class="block px-4 py-2 text-sm hover:bg-gray-100">
-                            Profile
-                        </a>
-
-                        <a href="/riwayat" class="block px-4 py-2 text-sm hover:bg-gray-100">
-                            Riwayat
-                        </a>
-
-                        <form action="/logout" method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 text-red-600">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            @endauth
-
-            @guest
-                <a href="/admin/login"
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition">
-                    Login
-                </a>
-            @endguest
-
+            {{-- HAMBURGER --}}
+            <button onclick="toggleMenu()" class="md:hidden text-xl text-slate-600">
+                <i class="bi bi-list"></i>
+            </button>
         </div>
+
+        {{-- MOBILE MENU --}}
+        <div id="mobileMenu"
+            class="hidden mt-3 bg-white/90 backdrop-blur-md border border-sky-100 rounded-2xl p-4 shadow">
+
+            <div class="flex flex-col gap-2 text-sm">
+                <a href="/" class="px-3 py-2 rounded-lg hover:bg-sky-50">Home</a>
+                <a href="/riwayat" class="px-3 py-2 rounded-lg hover:bg-sky-50">Riwayat</a>
+
+                <hr class="my-2">
+
+                @auth
+                    <a href="/profile" class="px-3 py-2 rounded-lg hover:bg-sky-50">
+                        Profile ({{ auth()->user()->name }})
+                    </a>
+
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-rose-50 text-rose-500">
+                            Logout
+                        </button>
+                    </form>
+                @else
+                    <a href="/admin/login" class="px-3 py-2 rounded-lg bg-sky-500 text-white text-center">
+                        Login
+                    </a>
+                @endauth
+            </div>
+        </div>
+
     </div>
 </nav>

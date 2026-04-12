@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\Peminjamen\Tables;
 
-use Filament\Actions\Action as ActionsAction;
+use Carbon\Carbon;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction as ActionsBulkAction;
+use Filament\Actions\BulkActionGroup as ActionsBulkActionGroup;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\Size;
@@ -17,27 +20,48 @@ class PeminjamenTable
     {
         return $table
             ->columns([
+                TextColumn::make('book.judul')
+                    ->label('Buku')
+                    ->searchable()
+                    ->sortable()
+                    ->wrap(),
                 TextColumn::make('user.name')
                     ->label('Nama Siswa')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('kelas')
-                    ->searchable(),
-                TextColumn::make('jurusan')
-                    ->searchable(),
-                TextColumn::make('tanggal_peminjaman')
-                    ->date()
-                    ->sortable(),
+                    ->label('Kelas')
+                    ->formatStateUsing(fn ($record) => $record->kelas.' • '.$record->jurusan)
+                    ->searchable(['kelas', 'jurusan']),
                 TextColumn::make('tanggal_kembali')
-                    ->date()
+                    ->label('Tenggat')
+                    ->formatStateUsing(function ($state, $record) {
+                        $pinjam = Carbon::parse($record->tanggal_peminjaman)->format('d M');
+                        $kembali = Carbon::parse($record->tanggal_kembali)->format('d M Y');
+
+                        return $pinjam.' - '.$kembali;
+                    })
                     ->sortable(),
                 BadgeColumn::make('status')
-                    ->colors([
-                        'danger' => 'dipinjam',
-                        'success' => 'kembali',
-                        'warning' => 'terlambat',
-                    ]),
+                    ->label('Status')
+                    ->formatStateUsing(function ($state, $record) {
+                        if (
+                            $record->status === 'dipinjam' &&
+                            Carbon::parse($record->tanggal_kembali)->isPast()
+                        ) {
+                            return 'terlambat';
+                        }
+
+                        return $state;
+                    })
+                    ->color(fn ($state, $record) => $record->isLate() ? 'danger' : match ($state) {
+                        'pengambilan' => 'warning',
+                        'dipinjam' => 'primary',
+                        'kembali' => 'success',
+                        default => 'secondary',
+                    }),
             ])
+
             ->filters([
                 SelectFilter::make('kelas')
                     ->label('Kelas')
@@ -57,15 +81,37 @@ class PeminjamenTable
                 SelectFilter::make('status')
                     ->label('Status')
                     ->options([
+                        'pengambilan' => 'Pengambilan',
                         'dipinjam' => 'Dipinjam',
                         'kembali' => 'Dikembalikan',
                         'terlambat' => 'Terlambat',
                     ]),
 
             ])
+
             ->filtersFormColumns(2)
             ->actions([
-                ActionsAction::make('kembalikan')
+                Action::make('diambil')
+                    ->label('Diambil')
+                    ->color('warning')
+                    ->icon('heroicon-o-check')
+                    ->visible(fn ($record) => $record->status === 'pengambilan')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update([
+                            'status' => 'dipinjam',
+                            'diambil_at' => now(),
+                        ]);
+                    })
+                    ->after(function () {
+                        Notification::make()
+                            ->title('Buku sudah diambil')
+                            ->success()
+                            ->send();
+                    }),
+
+                // 🔥 2. KEMBALIKAN
+                Action::make('kembalikan')
                     ->label('Kembalikan')
                     ->color('success')
                     ->icon('heroicon-o-arrow-uturn-left')
@@ -85,11 +131,50 @@ class PeminjamenTable
                             ->success()
                             ->send();
                     }),
+
                 ViewAction::make()
                     ->size(Size::Small)
                     ->color('primary')
                     ->button(),
 
+            ])
+
+            ->bulkActions([
+                ActionsBulkActionGroup::make([
+                    ActionsBulkAction::make('bulk_diambil')
+                        ->label('Tandai Diambil')
+                        ->icon('heroicon-o-check')
+                        ->color('warning')
+                        ->requiresConfirmation()
+                        ->action(function ($records) {
+                            foreach ($records as $record) {
+                                if ($record->status === 'pengambilan') {
+                                    $record->update([
+                                        'status' => 'dipinjam',
+                                        'diambil_at' => now(),
+                                    ]);
+                                }
+                            }
+                        }),
+
+                    ActionsBulkAction::make('bulk_kembalikan')
+                        ->label('Kembalikan')
+                        ->icon('heroicon-o-arrow-uturn-left')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->action(function ($records) {
+                            foreach ($records as $record) {
+                                if ($record->status === 'dipinjam') {
+                                    $record->update([
+                                        'status' => 'kembali',
+                                        'tanggal_kembali' => now(),
+                                    ]);
+
+                                    $record->book->increment('stok');
+                                }
+                            }
+                        }),
+                ]),
             ]);
     }
 }
