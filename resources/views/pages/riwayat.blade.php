@@ -155,7 +155,7 @@
             @endphp
 
             {{-- Stats --}}
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-6">
                 <div
                     class="bg-white/70 backdrop-blur-md border border-sky-100 rounded-2xl px-5 py-4 shadow-[0_4px_16px_rgba(14,165,233,0.06)]">
                     <p class="text-xs text-slate-400 font-medium mb-1">Total Pinjam</p>
@@ -177,6 +177,13 @@
                     <p class="font-serif-display text-3xl {{ $terlambat > 0 ? 'text-rose-500' : 'text-slate-900' }}">
                         {{ $terlambat }}</p>
                 </div>
+                <div
+                    class="bg-white/70 backdrop-blur-md border {{ $dibatalkan > 0 ? 'border-slate-500' : 'border-sky-100' }} rounded-2xl px-5 py-4 shadow-[0_4px_16px_rgba(14,165,233,0.06)]">
+                    <p class="text-xs text-slate-400 font-medium mb-1">Dibatalkan</p>
+                    <p class="font-serif-display text-3xl {{ $dibatalkan > 0 ? 'text-slate-500' : 'text-slate-900' }}">
+                        {{ $dibatalkan }}</p>
+                </div>
+
             </div>
 
             {{-- Search & Filter --}}
@@ -365,7 +372,7 @@
                                             @click="openDetail({{ Js::from([
                                                 'judul' => $item->book->judul,
                                                 'penulis' => $item->book->penulis,
-                                                'kategori' => $item->book->kategori,
+                                                'genre' => $item->book->genre,
                                                 'cover' => asset('storage/' . $item->book->cover),
                                                 'kelas' => $item->kelas,
                                                 'jurusan' => $item->jurusan,
@@ -521,7 +528,7 @@
                                 'bg-white text-sky-600 border-sky-200': !$store.modal.data.is_late && !$store.modal.data
                                     .is_pengambilan,
                             }"
-                            x-text="$store.modal.data.kategori"></span>
+                            x-text="$store.modal.data.genre"></span>
                         <h3 class="font-semibold text-slate-900 leading-snug mb-1 text-sm"
                             x-text="$store.modal.data.judul"></h3>
                         <p class="text-xs text-slate-400" x-text="$store.modal.data.penulis"></p>

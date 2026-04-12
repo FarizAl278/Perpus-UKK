@@ -27,7 +27,7 @@ class BooksTable
                 TextColumn::make('penulis')
                     ->searchable(),
 
-                TextColumn::make('kategori')
+                TextColumn::make('genres')
                     ->badge()
                     ->color('primary'),
 

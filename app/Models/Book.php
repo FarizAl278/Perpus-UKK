@@ -14,7 +14,7 @@ class Book extends Model
         'sinopsis',
         'penulis',
         'penerbit',
-        'kategori',
+        'genres_id',
         'tahun_terbit',
         'stok',
     ];
@@ -22,6 +22,11 @@ class Book extends Model
     public function peminjaman()
     {
         return $this->hasMany(Peminjaman::class);
+    }
+
+    public function genres()
+    {
+        return $this->belongsTo(Genres::class);
     }
 }
 

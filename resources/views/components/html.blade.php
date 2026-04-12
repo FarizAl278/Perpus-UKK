@@ -23,7 +23,7 @@
     }, 3000);
 
     // MODAL
-    function openModal(id, judul, penulis, kategori, cover) {
+    function openModal(id, judul, penulis, genre, cover) {
         const modal = document.getElementById('modal');
 
         modal.classList.remove('hidden');
@@ -31,7 +31,7 @@
 
         document.getElementById('modal_judul').innerText = judul;
         document.getElementById('modal_penulis').innerText = penulis;
-        document.getElementById('modal_kategori').innerText = kategori;
+        document.getElementById('modal_genre').innerText = genre;
         document.getElementById('modal_cover').src = cover;
 
         document.getElementById('modal_form').action = '/pinjam/' + id;

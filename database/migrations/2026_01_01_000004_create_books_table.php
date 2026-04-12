@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('sinopsis')->nullable();
             $table->string('penulis');
             $table->string('penerbit');
-            $table->string('kategori');
-            $table->date('tahun_terbit')->nullable();
+            $table->foreignId('genre_id')->constrained()->cascadeOnDelete();
+            $table->year('tahun_terbit')->nullable();
             $table->integer('stok')->default(0);
             $table->timestamps();
         });

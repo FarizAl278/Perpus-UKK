@@ -30,6 +30,11 @@ class CheckPeminjamanExpired extends Command
             ->where('expired_at', '<=', now())
             ->get();
 
+            if ($expired->isEmpty()) {
+                $this->info('Tidak ada peminjaman yang expired hari ini.');
+                return;
+            }
+
         foreach ($expired as $item) {
 
             // balikin stok buku

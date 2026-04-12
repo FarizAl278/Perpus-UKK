@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('peminjaman', function (Blueprint $table) {
-            $table->string('jurusan')->after('kelas');
+        Schema::create('genres', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('peminjaman', function (Blueprint $table) {
-            $table->dropColumn('jurusan');
-        });
+        Schema::dropIfExists('genre');
     }
 };

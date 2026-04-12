@@ -13,18 +13,18 @@ class BookController extends Controller
         // 🔥 ambil keyword (support q ATAU search)
         $search = request('q') ?? request('search');
 
-        // 🔥 SEARCH (judul, penulis, kategori)
+        // 🔥 SEARCH (judul, penulis, genre)
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
                     ->orWhere('penulis', 'like', "%{$search}%")
-                    ->orWhere('kategori', 'like', "%{$search}%");
+                    ->orWhere('genre', 'like', "%{$search}%");
             });
         }
 
-        // 🔥 FILTER KATEGORI
-        if (request('kategori')) {
-            $query->where('kategori', request('kategori'));
+        // 🔥 FILTER GENRE
+        if (request('genre')) {
+            $query->where('genre', request('genre'));
         }
 
         $books = $query->latest()->get();

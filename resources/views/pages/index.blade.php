@@ -204,7 +204,7 @@
                     <span class="pl-5 pr-3 text-slate-400"><i class="bi bi-search"></i></span>
                     <input type="text" name="q"
                         class="flex-1 py-3.5 text-sm text-slate-800 bg-transparent outline-none placeholder:text-slate-400 font-sora"
-                        placeholder="Cari judul, penulis, atau kategori…" value="{{ request('q') }}">
+                        placeholder="Cari judul, penulis, atau genre…" value="{{ request('q') }}">
                     <button type="submit"
                         class="m-[5px] px-5 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold rounded-full transition-all duration-200 hover:scale-[1.02]">
                         Cari
@@ -240,14 +240,14 @@
             <div class="flex flex-wrap gap-2 mb-8">
                 <a href="/"
                     class="px-4 py-1.5 rounded-full text-xs font-semibold border-[1.5px] transition-all duration-200
-                    {{ !request('kategori') ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
+                    {{ !request('genre') ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
                     Semua
                 </a>
-                @foreach (['Novel', 'Teknologi', 'Sejarah'] as $kategori)
-                    <a href="/?kategori={{ $kategori }}"
+                @foreach (['Novel', 'Teknologi', 'Sejarah'] as $genre)
+                    <a href="/?genre={{ $genre }}"
                         class="px-4 py-1.5 rounded-full text-xs font-semibold border-[1.5px] transition-all duration-200
-                        {{ request('kategori') == $kategori ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
-                        {{ $kategori }}
+                        {{ request('genre') == $genre ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
+                        {{ $genre }}
                     </a>
                 @endforeach
             </div>
@@ -276,7 +276,7 @@
                             <div class="p-4">
                                 <span
                                     class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-sky-50 border border-sky-100 rounded-full px-2.5 py-0.5 mb-2">
-                                    {{ $book->kategori }}
+                                    {{ $book->genre }}
                                 </span>
 
                                 <h3 class="font-serif-display text-base text-slate-900 leading-snug line-clamp-2 mb-1">
@@ -304,7 +304,7 @@
                                                     '{{ $book->id }}',
                                                     '{{ $book->judul }}',
                                                     '{{ $book->penulis }}',
-                                                    '{{ $book->kategori }}',
+                                                    '{{ $book->genre }}',
                                                     '{{ asset('storage/' . $book->cover) }}'
                                                 )"
                                                 class="w-full py-2 rounded-full text-xs font-medium text-sky-600 border-[1.5px] border-sky-200 hover:bg-sky-50 hover:border-sky-400 transition-all duration-200">
@@ -317,7 +317,7 @@
                                             </button>
                                         @endif
                                     @else
-                                        <a href="/admin/login"
+                                        <a href="/loginuser"
                                             class="block text-center py-2 rounded-full text-xs font-medium bg-rose-50 text-rose-500 border-[1.5px] border-rose-100 hover:bg-rose-100 transition-colors duration-200">
                                             Login dulu
                                         </a>
@@ -347,7 +347,7 @@
                 <div>
                     <h3 id="modal_judul" class="font-semibold text-sm text-slate-900 mb-1"></h3>
                     <p id="modal_penulis" class="text-xs text-slate-400 mb-2"></p>
-                    <span id="modal_kategori"
+                    <span id="modal_genre"
                         class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-white border border-sky-200 rounded-full px-2.5 py-0.5">
                     </span>
                 </div>
@@ -406,7 +406,7 @@
         }, 3000);
 
         // MODAL
-        function openModal(id, judul, penulis, kategori, cover) {
+        function openModal(id, judul, penulis, genre, cover) {
             const modal = document.getElementById('modal');
 
             modal.classList.remove('hidden');
@@ -414,7 +414,7 @@
 
             document.getElementById('modal_judul').innerText = judul;
             document.getElementById('modal_penulis').innerText = penulis;
-            document.getElementById('modal_kategori').innerText = kategori;
+            document.getElementById('modal_genre').innerText = genre;
             document.getElementById('modal_cover').src = cover;
 
             document.getElementById('modal_form').action = '/pinjam/' + id;

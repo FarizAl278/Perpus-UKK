@@ -50,7 +50,7 @@
                 {{-- INFO --}}
                 <div class="md:w-2/3 mt-6 md:mt-0">
                     <span class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-sky-50 border border-sky-100 rounded-full px-3 py-1 mb-3">
-                        {{ $book->kategori }}
+                        {{ $book->genre }}
                     </span>
 
                     <h1 class="font-serif-display text-2xl md:text-3xl text-slate-900 leading-tight">
@@ -90,7 +90,7 @@
                                     '{{ $book->id }}',
                                     '{{ addslashes($book->judul) }}',
                                     '{{ addslashes($book->penulis) }}',
-                                    '{{ $book->kategori }}',
+                                    '{{ $book->genre }}',
                                     '{{ asset('storage/' . $book->cover) }}'
                                 )"
                                 class="px-6 py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold transition-all duration-200 shadow-md shadow-sky-200/50 hover:shadow-lg hover:-translate-y-0.5">
@@ -141,7 +141,7 @@
 
                             <div class="p-4">
                                 <span class="inline-block text-[0.6rem] font-semibold uppercase text-sky-600 bg-sky-50 border border-sky-100 rounded-full px-2 py-0.5 mb-2">
-                                    {{ $item->kategori }}
+                                    {{ $item->genre }}
                                 </span>
                                 <h3 class="font-serif-display text-sm text-slate-900 leading-snug line-clamp-2 mb-1">
                                     {{ $item->judul }}
@@ -174,7 +174,7 @@
                 <div>
                     <h3 id="modal_judul" class="font-semibold text-sm text-slate-900 mb-1"></h3>
                     <p id="modal_penulis" class="text-xs text-slate-400 mb-2"></p>
-                    <span id="modal_kategori" class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-white border border-sky-200 rounded-full px-2.5 py-0.5">
+                    <span id="modal_genre" class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-white border border-sky-200 rounded-full px-2.5 py-0.5">
                     </span>
                 </div>
             </div>
@@ -230,14 +230,14 @@
         }, 3000);
 
         // MODAL FUNCTIONS - LOGIC SAMA PERSIS
-        function openModal(id, judul, penulis, kategori, cover) {
+        function openModal(id, judul, penulis, genre, cover) {
             const modal = document.getElementById('modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
 
             document.getElementById('modal_judul').innerText = judul;
             document.getElementById('modal_penulis').innerText = penulis;
-            document.getElementById('modal_kategori').innerText = kategori;
+            document.getElementById('modal_genre').innerText = genre;
             document.getElementById('modal_cover').src = cover;
 
             document.getElementById('modal_form').action = '/pinjam/' + id;
