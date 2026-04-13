@@ -19,9 +19,9 @@ class PeminjamanForm
                     ->disabled()
                     ->dehydrated(false),
                 TextInput::make('kelas')
-                    ->required(),
+                    ->nullable(),
                 TextInput::make('jurusan')
-                    ->required(),
+                    ->nullable(),
                 DatePicker::make('tanggal_peminjaman')
                     ->required(),
                 DatePicker::make('tanggal_kembali'),

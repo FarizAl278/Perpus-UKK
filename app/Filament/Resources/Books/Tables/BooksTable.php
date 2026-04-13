@@ -27,14 +27,14 @@ class BooksTable
                 TextColumn::make('penulis')
                     ->searchable(),
 
-                TextColumn::make('genres')
+                TextColumn::make('genres.name')
                     ->badge()
                     ->color('primary'),
 
                 TextColumn::make('penerbit'),
 
                 TextColumn::make('tahun_terbit')
-                    ->date(),
+                    ->date('Y'),
 
                 TextColumn::make('stok')
                     ->sortable(),

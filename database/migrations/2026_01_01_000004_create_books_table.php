@@ -20,9 +20,9 @@ return new class extends Migration
             $table->text('sinopsis')->nullable();
             $table->string('penulis');
             $table->string('penerbit');
-            $table->foreignId('genre_id')->constrained()->cascadeOnDelete();
-            $table->year('tahun_terbit')->nullable();
-            $table->integer('stok')->default(0);
+            $table->foreignId('genres_id')->constrained()->cascadeOnDelete();
+            $table->year('tahun_terbit')->default(date('Y'));
+            $table->integer('stok')->default(1);
             $table->timestamps();
         });
     }

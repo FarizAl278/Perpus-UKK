@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Books\Schemas;
 
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
@@ -41,7 +40,8 @@ class BookForm
                     ->required(),
 
                 TextInput::make('penerbit')
-                    ->required(),
+                    ->required()
+                    ->default('Unknown Publisher'),
 
                 Select::make('genres_id')
                     ->relationship('genres', 'name')
@@ -49,11 +49,17 @@ class BookForm
                     ->preload()
                     ->required(),
 
-                DatePicker::make('tahun_terbit'),
+                Select::make('tahun_terbit')
+                    ->options(
+                        collect(range(date('Y'), 1900))
+                            ->mapWithKeys(fn ($year) => [$year => $year])
+                    )
+                    ->default(date('Y'))
+                    ,
 
                 TextInput::make('stok')
                     ->numeric()
-                    ->default(0)
+                    ->default(1)
                     ->required(),
             ]);
     }

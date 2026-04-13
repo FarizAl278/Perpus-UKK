@@ -74,13 +74,13 @@
         }
 
         .toast-in {
-            animation: slideInToast 0.3s ease;
+            animation: slideInToast .3s ease;
         }
 
         @keyframes modalPop {
             from {
                 opacity: 0;
-                transform: scale(0.95) translateY(12px)
+                transform: scale(.95) translateY(12px)
             }
 
             to {
@@ -90,7 +90,7 @@
         }
 
         .modal-pop {
-            animation: modalPop 0.25s ease;
+            animation: modalPop .25s ease;
         }
 
         .line-clamp-2 {
@@ -118,8 +118,8 @@
         </div>
     @endif
 
-    {{-- ========== ANIMATED SKY BACKGROUND ========== --}}
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    {{-- ========== SKY BACKGROUND ========== --}}
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" class="w-full h-full"
             xmlns="http://www.w3.org/2000/svg">
 
@@ -132,57 +132,39 @@
 
             <rect width="1440" height="900" fill="url(#skygrad)" />
 
-            <!-- CLOUD 1 -->
-            <g class="cloud-1" style="opacity:0.9; transform:translateY(250px)">
+            <g class="cloud-1" style="opacity:.9; transform:translateY(250px)">
                 <ellipse cx="180" cy="140" rx="120" ry="45" fill="white" />
                 <ellipse cx="240" cy="120" rx="85" ry="40" fill="white" />
                 <ellipse cx="130" cy="135" rx="70" ry="35" fill="white" />
                 <ellipse cx="300" cy="140" rx="60" ry="30" fill="white" />
             </g>
 
-            <!-- CLOUD 2 -->
-            <g class="cloud-2" style="opacity:0.85; transform:translateY(380px)">
+            <g class="cloud-2" style="opacity:.85; transform:translateY(380px)">
                 <ellipse cx="200" cy="130" rx="140" ry="40" fill="white" />
                 <ellipse cx="270" cy="110" rx="95" ry="38" fill="white" />
                 <ellipse cx="150" cy="125" rx="75" ry="32" fill="white" />
                 <ellipse cx="320" cy="130" rx="65" ry="28" fill="white" />
             </g>
 
-            <!-- CLOUD 3 -->
-            <g class="cloud-3" style="opacity:0.75; transform:translateY(520px)">
+            <g class="cloud-3" style="opacity:.75; transform:translateY(520px)">
                 <ellipse cx="160" cy="120" rx="110" ry="38" fill="#eef9ff" />
                 <ellipse cx="220" cy="100" rx="80" ry="35" fill="#eef9ff" />
                 <ellipse cx="120" cy="115" rx="65" ry="28" fill="#eef9ff" />
                 <ellipse cx="270" cy="120" rx="55" ry="25" fill="#eef9ff" />
             </g>
-
-            <!-- CLOUD 4 -->
-            <g class="cloud-4" style="opacity:0.8; transform:translateY(650px)">
-                <ellipse cx="120" cy="100" rx="80" ry="28" fill="white" />
-                <ellipse cx="160" cy="85" rx="55" ry="26" fill="white" />
-                <ellipse cx="80" cy="95" rx="48" ry="22" fill="white" />
-            </g>
-
-            <!-- CLOUD 5 -->
-            <g class="cloud-5" style="opacity:0.7; transform:translateY(780px)">
-                <ellipse cx="200" cy="110" rx="120" ry="35" fill="#f0f9ff" />
-                <ellipse cx="260" cy="95" rx="85" ry="32" fill="#f0f9ff" />
-                <ellipse cx="150" cy="105" rx="70" ry="26" fill="#f0f9ff" />
-                <ellipse cx="300" cy="110" rx="60" ry="24" fill="#f0f9ff" />
-            </g>
-
         </svg>
     </div>
 
     {{-- ========== CONTENT ========== --}}
     <div class="relative z-10">
 
-        {{-- ===== HERO ===== --}}
+        {{-- HERO --}}
         <section class="relative min-h-[90vh] flex flex-col items-center justify-center text-center px-6 pt-28 pb-20">
 
             <div class="flex items-center gap-3 mb-6">
                 <span class="block w-7 h-px bg-sky-400"></span>
-                <p class="text-[0.68rem] font-semibold tracking-[0.22em] uppercase text-sky-500">Perpustakaan Libris
+                <p class="text-[0.68rem] font-semibold tracking-[0.22em] uppercase text-sky-500">
+                    Perpustakaan Libris
                 </p>
                 <span class="block w-7 h-px bg-sky-400"></span>
             </div>
@@ -193,20 +175,21 @@
             </h1>
 
             <p class="text-slate-500 font-light text-lg max-w-md leading-relaxed mb-8">
-                Temukan, pinjam, dan jelajahi berbagai koleksi buku.
-                Perpustakaan digital modern untuk pengalaman membaca yang lebih praktis.
+                Temukan, pinjam, dan jelajahi berbagai koleksi buku modern berdasarkan genre favoritmu.
             </p>
 
-            {{-- Search --}}
+            {{-- SEARCH --}}
             <form method="GET" action="/" class="w-full max-w-xl">
                 <div
-                    class="flex items-center bg-white border-[1.5px] border-sky-100 rounded-full shadow-[0_8px_40px_rgba(14,165,233,0.10)] overflow-hidden transition-all duration-200 focus-within:border-sky-400 focus-within:shadow-[0_8px_40px_rgba(14,165,233,0.18)]">
+                    class="flex items-center bg-white border-[1.5px] border-sky-100 rounded-full shadow-[0_8px_40px_rgba(14,165,233,0.10)] overflow-hidden focus-within:border-sky-400">
                     <span class="pl-5 pr-3 text-slate-400"><i class="bi bi-search"></i></span>
+
                     <input type="text" name="q"
-                        class="flex-1 py-3.5 text-sm text-slate-800 bg-transparent outline-none placeholder:text-slate-400 font-sora"
-                        placeholder="Cari judul, penulis, atau genre…" value="{{ request('q') }}">
+                        class="flex-1 py-3.5 text-sm text-slate-800 bg-transparent outline-none placeholder:text-slate-400"
+                        placeholder="Cari judul, penulis, genre..." value="{{ request('q') }}">
+
                     <button type="submit"
-                        class="m-[5px] px-5 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold rounded-full transition-all duration-200 hover:scale-[1.02]">
+                        class="m-[5px] px-5 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold rounded-full">
                         Cari
                     </button>
                 </div>
@@ -214,87 +197,101 @@
 
             <div class="flex flex-wrap gap-3 justify-center mt-6">
                 <a href="#buku"
-                    class="flex items-center gap-2 px-6 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5">
+                    class="flex items-center gap-2 px-6 py-2.5 bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold rounded-full">
                     <i class="bi bi-grid-3x3-gap"></i> Jelajahi Buku
                 </a>
+
                 <a href="/riwayat"
-                    class="flex items-center gap-2 px-6 py-2.5 bg-white border-[1.5px] border-sky-100 hover:border-sky-400 hover:bg-sky-50 text-slate-600 text-sm font-medium rounded-full transition-all duration-200">
+                    class="flex items-center gap-2 px-6 py-2.5 bg-white border border-sky-100 hover:bg-sky-50 text-slate-600 text-sm font-medium rounded-full">
                     <i class="bi bi-clock-history"></i> Riwayat Saya
                 </a>
             </div>
 
-            <div
-                class="bob absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-slate-400">
+            <div class="bob absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-400">
                 <span class="text-[0.65rem] tracking-[0.18em] uppercase">Scroll</span>
-                <i class="bi bi-chevron-down text-base"></i>
+                <i class="bi bi-chevron-down"></i>
             </div>
-
         </section>
 
-        {{-- ===== BOOK LIST ===== --}}
-        <section id="buku" class="max-w-6xl mx-auto px-6 pb-24">
+        {{-- BOOK LIST --}}
+        <section id="buku" class="max-w-7xl mx-auto px-6 pb-24">
 
-            <h2 class="font-serif-display text-3xl text-slate-900 mb-6">Koleksi Buku</h2>
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                <div>
+                    <h2 class="font-serif-display text-3xl text-slate-900">Koleksi Buku</h2>
+                    <p class="text-sm text-slate-500 mt-1">
+                        Pilih buku berdasarkan genre favoritmu
+                    </p>
+                </div>
+            </div>
 
-            {{-- Filter pills --}}
-            <div class="flex flex-wrap gap-2 mb-8">
+            {{-- FILTER GENRE DINAMIS --}}
+            <div class="flex flex-wrap gap-2 mb-10">
                 <a href="/"
-                    class="px-4 py-1.5 rounded-full text-xs font-semibold border-[1.5px] transition-all duration-200
+                    class="px-4 py-2 rounded-full text-xs font-semibold border transition
                     {{ !request('genre') ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
                     Semua
                 </a>
-                @foreach (['Novel', 'Teknologi', 'Sejarah'] as $genre)
-                    <a href="/?genre={{ $genre }}"
-                        class="px-4 py-1.5 rounded-full text-xs font-semibold border-[1.5px] transition-all duration-200
-                        {{ request('genre') == $genre ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
-                        {{ $genre }}
+
+                @foreach ($genres as $genre)
+                    <a href="/?genre={{ $genre->id }}"
+                        class="px-4 py-2 rounded-full text-xs font-semibold border transition
+                        {{ request('genre') == $genre->id ? 'bg-sky-500 text-white border-sky-500' : 'bg-white text-slate-500 border-sky-100 hover:border-sky-400 hover:text-sky-600' }}">
+                        {{ $genre->name }}
                     </a>
                 @endforeach
             </div>
 
-            {{-- Book grid --}}
+            {{-- GRID --}}
             @if ($books->isEmpty())
                 <div class="text-center py-24 text-slate-400">
                     <i class="bi bi-book text-5xl block mb-4"></i>
-                    <p class="text-sm">Belum ada buku yang tersedia.</p>
+                    <p class="text-sm">Belum ada buku tersedia.</p>
                 </div>
             @else
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     @foreach ($books as $book)
                         <div
-                            class="bg-white border-[1.5px] border-sky-50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_rgba(14,165,233,0.12)] hover:border-sky-100 group">
+                            class="bg-white border border-sky-50 rounded-2xl overflow-hidden hover:-translate-y-1 hover:shadow-xl transition group">
 
-                            <div class="relative overflow-hidden h-48">
+                            <div class="relative h-52 overflow-hidden">
                                 <img src="{{ asset('storage/' . $book->cover) }}" alt="{{ $book->judul }}"
-                                    loading="lazy"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                    class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+
                                 <div
-                                    class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition">
                                 </div>
                             </div>
 
                             <div class="p-4">
+
                                 <span
-                                    class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-sky-50 border border-sky-100 rounded-full px-2.5 py-0.5 mb-2">
-                                    {{ $book->genre }}
+                                    class="inline-block text-[11px] font-semibold uppercase tracking-wide text-sky-600 bg-sky-50 border border-sky-100 rounded-full px-2.5 py-1 mb-2">
+                                    {{ $book->genres->name }}
                                 </span>
 
-                                <h3 class="font-serif-display text-base text-slate-900 leading-snug line-clamp-2 mb-1">
+                                <h3 class="font-serif-display text-base text-slate-900 line-clamp-2 mb-1">
                                     {{ $book->judul }}
                                 </h3>
 
-                                <p class="text-xs text-slate-400 mb-2">{{ $book->penulis }}</p>
+                                <p class="text-xs text-slate-400 mb-3">
+                                    {{ $book->penulis }}
+                                </p>
 
-                                <div class="flex items-center gap-1.5 text-xs text-slate-500 mb-4">
+                                <div class="flex items-center gap-2 text-xs mb-4">
                                     <span
-                                        class="w-1.5 h-1.5 rounded-full flex-shrink-0 {{ $book->stok > 0 ? 'bg-green-400' : 'bg-slate-200' }}"></span>
-                                    {{ $book->stok > 0 ? $book->stok . ' stok tersedia' : 'Stok habis' }}
+                                        class="w-2 h-2 rounded-full {{ $book->stok > 0 ? 'bg-emerald-400' : 'bg-slate-300' }}"></span>
+
+                                    <span class="text-slate-500">
+                                        {{ $book->stok > 0 ? $book->stok . ' tersedia' : 'Stok habis' }}
+                                    </span>
                                 </div>
 
                                 <div class="space-y-2">
+
                                     <a href="/books/{{ $book->slug }}"
-                                        class="block text-center py-2 rounded-full text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white transition-colors duration-200">
-                                        Lihat Detail
+                                        class="block text-center py-2 rounded-full text-xs font-semibold bg-sky-500 hover:bg-sky-600 text-white">
+                                        Detail Buku
                                     </a>
 
                                     @auth
@@ -304,73 +301,74 @@
                                                     '{{ $book->id }}',
                                                     '{{ $book->judul }}',
                                                     '{{ $book->penulis }}',
-                                                    '{{ $book->genre }}',
+                                                    '{{ $book->genres->name }}',
                                                     '{{ asset('storage/' . $book->cover) }}'
                                                 )"
-                                                class="w-full py-2 rounded-full text-xs font-medium text-sky-600 border-[1.5px] border-sky-200 hover:bg-sky-50 hover:border-sky-400 transition-all duration-200">
+                                                class="w-full py-2 rounded-full text-xs font-medium border border-sky-200 text-sky-600 hover:bg-sky-50">
                                                 Pinjam Buku
                                             </button>
                                         @else
                                             <button disabled
-                                                class="w-full py-2 rounded-full text-xs font-medium text-slate-400 bg-slate-100 cursor-not-allowed">
+                                                class="w-full py-2 rounded-full text-xs bg-slate-100 text-slate-400 cursor-not-allowed">
                                                 Stok Habis
                                             </button>
                                         @endif
                                     @else
                                         <a href="/loginuser"
-                                            class="block text-center py-2 rounded-full text-xs font-medium bg-rose-50 text-rose-500 border-[1.5px] border-rose-100 hover:bg-rose-100 transition-colors duration-200">
+                                            class="block text-center py-2 rounded-full text-xs font-medium bg-rose-50 text-rose-500 border border-rose-100">
                                             Login dulu
                                         </a>
                                     @endauth
+
                                 </div>
                             </div>
-
                         </div>
                     @endforeach
                 </div>
             @endif
 
         </section>
-
     </div>
 
-    {{-- ========== MODAL (logic original, style Tailwind) ========== --}}
+    {{-- MODAL --}}
     <div id="modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
 
-        <div class="modal-pop bg-white w-full max-w-md rounded-3xl p-7 shadow-[0_32px_80px_rgba(12,35,64,0.18)]">
+        <div class="modal-pop bg-white w-full max-w-md rounded-3xl p-7 shadow-xl">
 
-            <h2 class="font-serif-display text-2xl text-slate-900 mb-5">Pinjam Buku</h2>
+            <h2 class="font-serif-display text-2xl text-slate-900 mb-5">
+                Pinjam Buku
+            </h2>
 
-            {{-- Preview --}}
             <div class="flex gap-4 items-start bg-sky-50 border border-sky-100 rounded-2xl p-4 mb-5">
-                <img id="modal_cover" class="w-14 h-20 object-cover rounded-lg flex-shrink-0">
+                <img id="modal_cover" class="w-14 h-20 object-cover rounded-lg">
+
                 <div>
                     <h3 id="modal_judul" class="font-semibold text-sm text-slate-900 mb-1"></h3>
                     <p id="modal_penulis" class="text-xs text-slate-400 mb-2"></p>
+
                     <span id="modal_genre"
-                        class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-white border border-sky-200 rounded-full px-2.5 py-0.5">
+                        class="inline-block text-[11px] font-semibold uppercase text-sky-600 bg-white border border-sky-200 rounded-full px-2.5 py-1">
                     </span>
                 </div>
             </div>
 
-            {{-- User info --}}
             @auth
-                <div
-                    class="bg-slate-50 border border-slate-100 rounded-xl p-3.5 text-sm text-slate-600 mb-5 leading-relaxed">
-                    <p><strong class="text-slate-800">Nama:</strong> {{ auth()->user()->name }}</p>
-                    <p><strong class="text-slate-800">Kelas:</strong> {{ auth()->user()->kelas }}</p>
-                    <p><strong class="text-slate-800">Jurusan:</strong> {{ auth()->user()->jurusan }}</p>
+                <div class="bg-slate-50 border rounded-xl p-3 text-sm text-slate-600 mb-5">
+                    <p><strong>Nama:</strong> {{ auth()->user()->name }}</p>
+                    <p><strong>Kelas:</strong> {{ auth()->user()->kelas }}</p>
+                    <p><strong>Jurusan:</strong> {{ auth()->user()->jurusan }}</p>
                 </div>
             @endauth
 
             <form id="modal_form" method="POST">
                 @csrf
 
-                <label class="block text-[0.72rem] font-semibold tracking-widest uppercase text-slate-500 mb-1.5">
+                <label class="block text-xs font-semibold uppercase text-slate-500 mb-2">
                     Lama Pinjam
                 </label>
+
                 <select name="lama_hari" id="lama_hari"
-                    class="w-full font-sora text-sm text-slate-800 px-4 py-2.5 border-[1.5px] border-sky-100 focus:border-sky-400 rounded-xl bg-white outline-none transition-colors duration-200 mb-3"
+                    class="w-full px-4 py-2.5 border border-sky-100 rounded-xl mb-4"
                     onchange="updateTanggal()">
                     @for ($i = 1; $i <= 7; $i++)
                         <option value="{{ $i }}">{{ $i }} Hari</option>
@@ -382,13 +380,14 @@
                     <span id="tanggal_kembali" class="font-semibold text-sky-600"></span>
                 </p>
 
-                <div class="flex justify-end gap-2.5">
+                <div class="flex justify-end gap-2">
                     <button type="button" onclick="closeModal()"
-                        class="px-5 py-2.5 rounded-full border-[1.5px] border-sky-100 hover:bg-sky-50 text-slate-600 text-sm font-medium transition-colors duration-200">
+                        class="px-5 py-2.5 rounded-full border border-sky-100 text-slate-600">
                         Batal
                     </button>
+
                     <button type="submit"
-                        class="px-6 py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold transition-colors duration-200">
+                        class="px-6 py-2.5 rounded-full bg-sky-500 hover:bg-sky-600 text-white font-semibold">
                         Pinjam
                     </button>
                 </div>
@@ -397,15 +396,13 @@
         </div>
     </div>
 
-    {{-- ========== SCRIPTS (logic original dipertahankan 1:1) ========== --}}
+    {{-- SCRIPT --}}
     <script>
-        // TOAST AUTO HIDE
         setTimeout(() => {
             document.getElementById('toast-success')?.remove();
             document.getElementById('toast-error')?.remove();
         }, 3000);
 
-        // MODAL
         function openModal(id, judul, penulis, genre, cover) {
             const modal = document.getElementById('modal');
 
@@ -431,13 +428,13 @@
         function updateTanggal() {
             const lama = parseInt(document.getElementById('lama_hari').value);
             const sekarang = new Date();
+
             sekarang.setDate(sekarang.getDate() + lama);
 
             document.getElementById('tanggal_kembali').textContent =
                 sekarang.toLocaleDateString('id-ID');
         }
 
-        // CLOSE MODAL CLICK OUTSIDE
         document.addEventListener('click', function(e) {
             const modal = document.getElementById('modal');
             if (e.target === modal) closeModal();

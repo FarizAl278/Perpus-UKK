@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('book_id')->constrained()->cascadeOnDelete();
-            $table->string('kelas');
-            $table->string('jurusan');
+            $table->string('kelas')->nullable();
+            $table->string('jurusan')->nullable();
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_kembali')->nullable();
             $table->enum('status', [
