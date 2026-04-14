@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PeminjamanController extends Controller
 {
@@ -53,8 +54,7 @@ class PeminjamanController extends Controller
             'tanggal_peminjaman' => now(),
             'tanggal_kembali' => now()->addDays((int) $request->lama_hari),
             'status' => 'pengambilan',
-
-            'expired_at' => now()->addMinute(),
+            'expired_at' => now()->addHours(12), // 12 jam untuk pengambilan
         ]);
 
         $book->decrement('stok');
@@ -70,5 +70,52 @@ class PeminjamanController extends Controller
             ->get();
 
         return view('pages.riwayat', compact('riwayat'));
+    }
+
+    /**
+     * ✅ METHOD BARU: Batalkan Peminjaman
+     * Hanya bisa dibatalkan jika status masih 'pengambilan' dan belum expired
+     */
+    public function cancel($id)
+    {
+        try {
+            $peminjaman = Peminjaman::where('id', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
+
+            // Validasi: Hanya bisa batalkan jika status masih 'pengambilan'
+            if ($peminjaman->status !== 'pengambilan') {
+                return back()->with('error', 'Peminjaman ini tidak dapat dibatalkan karena status sudah berubah.');
+            }
+
+            // Validasi: Cek apakah sudah lewat deadline expired_at
+            if ($peminjaman->expired_at && now()->gt($peminjaman->expired_at)) {
+                // Jika sudah expired, ubah status otomatis jadi dibatalkan
+                $peminjaman->update([
+                    'status' => 'dibatalkan',
+                    'cancelled_at' => now(),
+                    'cancelled_reason' => 'Waktu pengambilan habis',
+                ]);
+                // Kembalikan stok
+                $peminjaman->book->increment('stok');
+                return back()->with('error', 'Waktu pengambilan telah habis. Peminjaman otomatis dibatalkan.');
+            }
+
+            // Proses pembatalan
+            $peminjaman->update([
+                'status' => 'dibatalkan',
+                'cancelled_at' => now(),
+                'cancelled_reason' => 'Dibatalkan oleh peminjam',
+            ]);
+
+            // Kembalikan stok buku
+            $peminjaman->book->increment('stok');
+
+            return back()->with('success', 'Peminjaman berhasil dibatalkan. Stok buku telah dikembalikan.');
+
+        } catch (\Exception $e) {
+            Log::error('Cancel Peminjaman Error: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat membatalkan peminjaman.');
+        }
     }
 }

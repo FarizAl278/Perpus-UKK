@@ -58,6 +58,8 @@ class PeminjamenTable
                         'pengambilan' => 'warning',
                         'dipinjam' => 'primary',
                         'kembali' => 'success',
+                        'terlambat' => 'danger',
+                        'dibatalkan' => 'secondary',
                         default => 'secondary',
                     }),
             ])
@@ -85,6 +87,7 @@ class PeminjamenTable
                         'dipinjam' => 'Dipinjam',
                         'kembali' => 'Dikembalikan',
                         'terlambat' => 'Terlambat',
+                        'dibatalkan' => 'Dibatalkan',
                     ]),
 
             ])

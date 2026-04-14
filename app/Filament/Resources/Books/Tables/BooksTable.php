@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Books\Tables;
 
 use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
@@ -17,6 +19,8 @@ class BooksTable
             ->columns([
                 ImageColumn::make('cover')
                     ->label('Cover')
+                    ->disk('public')
+                    ->visibility('public')
                     ->square()
                     ->size(50),
 
@@ -43,6 +47,16 @@ class BooksTable
                 ActionGroup::make([
                     EditAction::make(),
                     DeleteAction::make(),
+                ]),
+            ])
+
+            ->bulkActions([
+                BulkActionGroup::make([
+                    BulkAction::make('delete')
+                        ->label('Hapus')
+                        ->color('danger')
+                        ->action(fn ($records) => $records->each->delete())
+                        ->requiresConfirmation(),
                 ]),
             ]);
     }

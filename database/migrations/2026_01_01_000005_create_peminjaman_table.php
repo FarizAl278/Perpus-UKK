@@ -27,6 +27,8 @@ return new class extends Migration
                 'terlambat',
                 'dibatalkan',
             ])->default('pengambilan');
+            $table->timestamp('cancelled_at')->nullable();
+            $table->string('cancelled_reason')->nullable();
             $table->timestamp('expired_at')->nullable();
             $table->timestamp('diambil_at')->nullable();
             $table->timestamps();

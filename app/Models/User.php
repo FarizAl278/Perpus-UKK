@@ -27,6 +27,7 @@ class User extends Authenticatable implements FilamentUser
         'kelas',
         'jurusan',
         'role',
+        'avatar',
     ];
 
     /**

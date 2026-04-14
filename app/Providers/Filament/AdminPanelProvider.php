@@ -49,7 +49,6 @@ class AdminPanelProvider extends PanelProvider
                 PeminjamanChart::class,
                 PerpusStats::class,
                 BulananChart::class,
-                StokBuku::class,
                 LatestPeminjaman::class,
             ])
             ->middleware([

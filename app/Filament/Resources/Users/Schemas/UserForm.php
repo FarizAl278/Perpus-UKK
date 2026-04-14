@@ -31,6 +31,7 @@ class UserForm
                 'admin' => 'Admin',
                 'siswa' => 'Siswa',
             ])
+            ->default('siswa')
             ->reactive()
             ->required(),
 
