@@ -207,7 +207,8 @@
                 </a>
             </div>
 
-            <div class="bob absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-400">
+            <div
+                class="bob absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-slate-400">
                 <span class="text-[0.65rem] tracking-[0.18em] uppercase">Scroll</span>
                 <i class="bi bi-chevron-down"></i>
             </div>
@@ -368,8 +369,7 @@
                 </label>
 
                 <select name="lama_hari" id="lama_hari"
-                    class="w-full px-4 py-2.5 border border-sky-100 rounded-xl mb-4"
-                    onchange="updateTanggal()">
+                    class="w-full px-4 py-2.5 border border-sky-100 rounded-xl mb-4" onchange="updateTanggal()">
                     @for ($i = 1; $i <= 7; $i++)
                         <option value="{{ $i }}">{{ $i }} Hari</option>
                     @endfor

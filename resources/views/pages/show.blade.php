@@ -50,7 +50,7 @@
                 {{-- INFO --}}
                 <div class="md:w-2/3 mt-6 md:mt-0">
                     <span class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase text-sky-600 bg-sky-50 border border-sky-100 rounded-full px-3 py-1 mb-3">
-                        {{ $book->genre }}
+                        {{ $book->genres->name ?? 'Tanpa Kategori' }}
                     </span>
 
                     <h1 class="font-serif-display text-2xl md:text-3xl text-slate-900 leading-tight">

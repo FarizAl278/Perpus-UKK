@@ -82,19 +82,24 @@
             </div>
 
             {{-- Search & Filter --}}
-            <div class="flex flex-col sm:flex-row gap-3 mb-5">
+            <div class="flex flex-col gap-4 mb-5">
                 <div class="flex items-center flex-1 bg-white/70 backdrop-blur-md border border-sky-100 rounded-xl px-4 gap-2.5 shadow-[0_2px_12px_rgba(14,165,233,0.05)] focus-within:border-sky-400 transition-colors duration-200">
                     <i class="bi bi-search text-slate-400 text-sm flex-shrink-0"></i>
-                    <input type="text" x-model="search" placeholder="Cari judul atau penulis…" class="flex-1 py-3 text-sm text-slate-700 bg-transparent outline-none placeholder:text-slate-400">
+                    <input type="text" x-model="search" placeholder="Cari judul, penulis, atau genre…" class="flex-1 py-3 text-sm text-slate-700 bg-transparent outline-none placeholder:text-slate-400">
                     <button x-show="search" x-cloak @click="search=''" class="text-slate-300 hover:text-slate-500 transition-colors"><i class="bi bi-x-lg text-xs"></i></button>
                 </div>
-                <div class="flex gap-2 flex-shrink-0 flex-wrap">
-                    <button @click="filter='semua'" :class="filter === 'semua' ? 'bg-sky-500 text-white border-sky-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-sky-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Semua</button>
-                    <button @click="filter='pengambilan'" :class="filter === 'pengambilan' ? 'bg-amber-500 text-white border-amber-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-amber-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Pengambilan</button>
-                    <button @click="filter='dipinjam'" :class="filter === 'dipinjam' ? 'bg-sky-500 text-white border-sky-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-sky-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Dipinjam</button>
-                    <button @click="filter='kembali'" :class="filter === 'kembali' ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-emerald-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Dikembalikan</button>
-                    <button @click="filter='terlambat'" :class="filter === 'terlambat' ? 'bg-rose-500 text-white border-rose-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-rose-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Terlambat</button>
-                    <button @click="filter='dibatalkan'" :class="filter === 'dibatalkan' ? 'bg-slate-500 text-white border-slate-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-slate-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Dibatalkan</button>
+                <div class="flex flex-col sm:flex-row gap-3 flex-wrap">
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold mb-2 uppercase tracking-wide">Status</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <button @click="filter='semua'" :class="filter === 'semua' ? 'bg-sky-500 text-white border-sky-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-sky-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Semua</button>
+                            <button @click="filter='pengambilan'" :class="filter === 'pengambilan' ? 'bg-amber-500 text-white border-amber-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-amber-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Pengambilan</button>
+                            <button @click="filter='dipinjam'" :class="filter === 'dipinjam' ? 'bg-sky-500 text-white border-sky-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-sky-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Dipinjam</button>
+                            <button @click="filter='kembali'" :class="filter === 'kembali' ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-emerald-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Dikembalikan</button>
+                            <button @click="filter='terlambat'" :class="filter === 'terlambat' ? 'bg-rose-500 text-white border-rose-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-rose-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Terlambat</button>
+                            <button @click="filter='dibatalkan'" :class="filter === 'dibatalkan' ? 'bg-slate-500 text-white border-slate-500' : 'bg-white/70 text-slate-500 border-sky-100 hover:border-slate-400'" class="px-4 py-2 rounded-xl text-xs font-semibold border-[1.5px] transition-all duration-200 backdrop-blur-md">Dibatalkan</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -106,6 +111,7 @@
                             <tr class="border-b border-sky-100">
                                 <th class="px-5 py-4 text-left text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-slate-400">#</th>
                                 <th class="px-5 py-4 text-left text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-slate-400">Buku</th>
+                                <th class="px-5 py-4 text-left text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-slate-400">Genre</th>
                                 <th class="px-5 py-4 text-left text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-slate-400">Tanggal</th>
                                 <th class="px-5 py-4 text-left text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-slate-400">Status</th>
                                 <th class="px-5 py-4 text-left text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-slate-400">Aksi</th>
@@ -169,7 +175,7 @@
                                     };
                                 @endphp
 
-                                <tr id="row-{{ $item->id }}" x-show="isVisible({{ Js::from($item->book->judul) }}, {{ Js::from($item->book->penulis) }}, {{ Js::from($item->status) }}, {{ $isLate ? 'true' : 'false' }})" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="group transition-colors duration-150 {{ $rowBg }}">
+                                <tr id="row-{{ $item->id }}" x-show="isVisible({{ Js::from($item->book->judul) }}, {{ Js::from($item->book->penulis) }}, {{ Js::from($item->book->genres->name ?? '') }}, {{ Js::from($item->status) }}, {{ $isLate ? 'true' : 'false' }})" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="group transition-colors duration-150 {{ $rowBg }}">
 
                                     <td class="px-5 py-4 text-xs {{ $subColor }}">{{ $index + 1 }}</td>
 
@@ -178,6 +184,10 @@
                                             <img src="{{ asset('storage/' . $item->book->cover) }}" class="w-10 h-14 object-cover rounded-lg shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
                                             <div><p class="font-semibold leading-snug {{ $textColor }}">{{ $item->book->judul }}</p><p class="text-xs mt-0.5 {{ $subColor }}">{{ $item->book->penulis }}</p></div>
                                         </div>
+                                    </td>
+
+                                    <td class="px-5 py-4">
+                                        <span class="inline-block text-[0.7rem] font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full border bg-blue-100 text-blue-600 border-blue-200">{{ $item->book->genres->name ?? 'N/A' }}</span>
                                     </td>
 
                                     <td class="px-5 py-4">
@@ -198,7 +208,7 @@
 
                                     <td class="px-5 py-4">
                                         <div class="flex gap-2">
-                                            <button @click="openDetail({{ Js::from(['judul' => $item->book->judul, 'penulis' => $item->book->penulis, 'genre' => $item->book->genre, 'cover' => asset('storage/' . $item->book->cover), 'kelas' => $item->kelas, 'jurusan' => $item->jurusan, 'tanggal_peminjaman' => \Carbon\Carbon::parse($item->tanggal_peminjaman)->format('d M Y'), 'tanggal_kembali' => $kembali->format('d M Y'), 'status' => $item->status, 'is_late' => $isLate, 'is_pengambilan' => $isPengambilan, 'is_dibatalkan' => $isDibatalkan, 'label' => $label, 'deadline_ts' => $deadlinePengambilan, 'id' => $item->id]) }})" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium border-[1.5px] transition-all duration-200 {{ $isLate ? 'text-rose-500 border-rose-200 hover:bg-rose-50' : ($isPengambilan ? 'text-amber-500 border-amber-200 hover:bg-amber-50' : ($isDibatalkan ? 'text-slate-500 border-slate-200 hover:bg-slate-50' : 'text-sky-600 border-sky-200 hover:bg-sky-50')) }}"><i class="bi bi-eye text-xs"></i> Detail</button>
+                                            <button @click="openDetail({{ Js::from(['judul' => $item->book->judul, 'penulis' => $item->book->penulis, 'genres' => $item->book->genres->name ?? 'N/A', 'cover' => asset('storage/' . $item->book->cover), 'kelas' => $item->kelas, 'jurusan' => $item->jurusan, 'tanggal_peminjaman' => \Carbon\Carbon::parse($item->tanggal_peminjaman)->format('d M Y'), 'tanggal_kembali' => $kembali->format('d M Y'), 'status' => $item->status, 'is_late' => $isLate, 'is_pengambilan' => $isPengambilan, 'is_dibatalkan' => $isDibatalkan, 'label' => $label, 'deadline_ts' => $deadlinePengambilan, 'id' => $item->id]) }})" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium border-[1.5px] transition-all duration-200 {{ $isLate ? 'text-rose-500 border-rose-200 hover:bg-rose-50' : ($isPengambilan ? 'text-amber-500 border-amber-200 hover:bg-amber-50' : ($isDibatalkan ? 'text-slate-500 border-slate-200 hover:bg-slate-50' : 'text-sky-600 border-sky-200 hover:bg-sky-50')) }}"><i class="bi bi-eye text-xs"></i> Detail</button>
                                             @if ($isPengambilan)
                                                 <button type="button" @click="openCancelModal({{ $item->id }}, '{{ addslashes($item->book->judul) }}')" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-medium border-[1.5px] border-rose-200 text-rose-600 hover:bg-rose-50 transition-all duration-200"><i class="bi bi-x-circle text-xs"></i> Batal</button>
                                             @endif
@@ -230,7 +240,7 @@
                 <div class="px-7 pb-6 space-y-4">
                     <div class="flex gap-4 items-start border rounded-2xl p-4" :class="{ 'bg-rose-50 border-rose-100': $store.modal.data.is_late, 'bg-amber-50 border-amber-100': $store.modal.data.is_pengambilan && !$store.modal.data.is_late, 'bg-sky-50 border-sky-100': !$store.modal.data.is_late && !$store.modal.data.is_pengambilan, }">
                         <img :src="$store.modal.data.cover" class="w-16 h-24 object-cover rounded-xl shadow-sm flex-shrink-0">
-                        <div class="pt-1"><span class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase px-2.5 py-0.5 rounded-full mb-2 border" :class="{ 'bg-rose-100 text-rose-500 border-rose-200': $store.modal.data.is_late, 'bg-amber-100 text-amber-600 border-amber-200': $store.modal.data.is_pengambilan && !$store.modal.data.is_late, 'bg-white text-sky-600 border-sky-200': !$store.modal.data.is_late && !$store.modal.data.is_pengambilan, }" x-text="$store.modal.data.genre"></span><h3 class="font-semibold text-slate-900 leading-snug mb-1 text-sm" x-text="$store.modal.data.judul"></h3><p class="text-xs text-slate-400" x-text="$store.modal.data.penulis"></p></div>
+                        <div class="pt-1"><span class="inline-block text-[0.65rem] font-semibold tracking-wide uppercase px-2.5 py-0.5 rounded-full mb-2 border" :class="{ 'bg-rose-100 text-rose-500 border-rose-200': $store.modal.data.is_late, 'bg-amber-100 text-amber-600 border-amber-200': $store.modal.data.is_pengambilan && !$store.modal.data.is_late, 'bg-white text-sky-600 border-sky-200': !$store.modal.data.is_late && !$store.modal.data.is_pengambilan, }" x-text="$store.modal.data.genres"></span><h3 class="font-semibold text-slate-900 leading-snug mb-1 text-sm" x-text="$store.modal.data.judul"></h3><p class="text-xs text-slate-400" x-text="$store.modal.data.penulis"></p></div>
                     </div>
                     <div class="divide-y divide-slate-100 rounded-2xl border border-slate-100 overflow-hidden">
                         <div class="flex items-center justify-between px-4 py-3 bg-white"><span class="text-xs text-slate-400 font-medium">Kelas</span><span class="text-xs font-semibold text-slate-700" x-text="$store.modal.data.kelas"></span></div>
@@ -298,9 +308,9 @@
                 // ✅ Cancel Modal State
                 showCancelModal: false, cancelBookTitle: '', cancelFormAction: '',
 
-                isVisible(judul, penulis, status, isLate) {
+                isVisible(judul, penulis, genres, status, isLate) {
                     const q = this.search.toLowerCase().trim();
-                    const matchSearch = q === '' || judul.toLowerCase().includes(q) || penulis.toLowerCase().includes(q);
+                    const matchSearch = q === '' || judul.toLowerCase().includes(q) || penulis.toLowerCase().includes(q) || genre.toLowerCase().includes(q);
                     let matchFilter = false;
                     switch (this.filter) {
                         case 'semua': matchFilter = true; break;
@@ -308,6 +318,7 @@
                         case 'dipinjam': matchFilter = status === 'dipinjam' && !isLate; break;
                         case 'pengambilan': matchFilter = status === 'pengambilan'; break;
                         case 'dibatalkan': matchFilter = status === 'dibatalkan'; break;
+                        case 'kembali': matchFilter = status === 'kembali'; break;
                         default: matchFilter = status === this.filter;
                     }
                     return matchSearch && matchFilter;

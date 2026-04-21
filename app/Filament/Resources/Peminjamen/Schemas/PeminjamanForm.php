@@ -13,6 +13,16 @@ class PeminjamanForm
     {
         return $schema
             ->components([
+                Select::make('book_id')
+                    ->label('Judul Buku')
+                    ->relationship('book', 'judul')
+                    ->disabled()
+                    ->dehydrated(false),
+                Select::make('book_id')
+                    ->label('Penulis')
+                    ->relationship('book', 'penulis')
+                    ->disabled()
+                    ->dehydrated(false),
                 Select::make('user_id')
                     ->label('Nama Siswa')
                     ->relationship('user', 'name')

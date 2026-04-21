@@ -37,8 +37,8 @@ class BooksTable
 
                 TextColumn::make('penerbit'),
 
-                TextColumn::make('tahun_terbit')
-                    ->date('Y'),
+                TextColumn::make('tahun_terbit'),
+                    // ->date(),
 
                 TextColumn::make('stok')
                     ->sortable(),

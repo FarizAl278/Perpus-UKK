@@ -6,7 +6,6 @@ use App\Filament\Widgets\BulananChart;
 use App\Filament\Widgets\LatestPeminjaman;
 use App\Filament\Widgets\PeminjamanChart;
 use App\Filament\Widgets\PerpusStats;
-use App\Filament\Widgets\StokBuku;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -65,6 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->sidebarCollapsibleOnDesktop()
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->brandName('Libris');
     }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('penulis');
             $table->string('penerbit');
             $table->foreignId('genres_id')->constrained()->cascadeOnDelete();
-            $table->year('tahun_terbit')->default(date('Y'));
+            $table->year('tahun_terbit')->nullable();
             $table->integer('stok')->default(1);
             $table->timestamps();
         });

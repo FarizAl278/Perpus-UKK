@@ -21,7 +21,8 @@ class BookForm
                     ->disk('public')
                     ->directory('covers')
                     ->visibility('public')
-                    ->imagePreviewHeight('150'),
+                    ->imagePreviewHeight('150')
+                    ->required(),
 
                 TextInput::make('judul')
                     ->required()
@@ -54,7 +55,6 @@ class BookForm
                         collect(range(date('Y'), 1900))
                             ->mapWithKeys(fn ($year) => [$year => $year])
                     )
-                    ->default(date('Y'))
                     ,
 
                 TextInput::make('stok')

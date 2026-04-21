@@ -18,7 +18,6 @@ class PeminjamanController extends Controller
             return back()->with('error', 'Stok habis!');
         }
 
-        // 🔶 CEK: masih nunggu pengambilan
         $menunggu = Peminjaman::where('user_id', Auth::id())
             ->where('book_id', $book->id)
             ->where('status', 'pengambilan')
@@ -32,7 +31,6 @@ class PeminjamanController extends Controller
             return back()->with('error', 'Kamu sudah memesan buku ini, silakan ambil dalam 12 jam!');
         }
 
-        // 🔷 CEK: masih dipinjam
         $dipinjam = Peminjaman::where('user_id', Auth::id())
             ->where('book_id', $book->id)
             ->where('status', 'dipinjam')
@@ -54,7 +52,7 @@ class PeminjamanController extends Controller
             'tanggal_peminjaman' => now(),
             'tanggal_kembali' => now()->addDays((int) $request->lama_hari),
             'status' => 'pengambilan',
-            'expired_at' => now()->addHours(12), // 12 jam untuk pengambilan
+            'expired_at' => now()->addSeconds(30),
         ]);
 
         $book->decrement('stok');

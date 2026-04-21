@@ -16,4 +16,11 @@ class EditBook extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        // dd($data);
+
+        return $data;
+    }
 }
